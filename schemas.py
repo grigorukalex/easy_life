@@ -16,7 +16,6 @@ class NewTask(BaseModel):
 
 class Task(NewTask):
     id_task: int = Field(default=None, alias="id_task")
-    # TODO:
     # status: int = 1
     status: int = Field(default=TaskStatus.IN_WORK)
     # status: TaskStatus = Field(default=TaskStatus.IN_WORK)
