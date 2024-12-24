@@ -13,3 +13,56 @@ aiosqlite
 Запуск сервера через fastapi:       fastapi dev main.py
 Запуск сервера через uvicorn:       uvicorn 'main:app' --reload
 Запуск сервера через файл проекта:  fastapi dev main.py
+
+
+===============================================================
+# Установка Docker
+# https://docs.docker.com/engine/install/ubuntu/
+===============================================================
+-----------------------------------------------------
+# 1. Настройте aptрепозиторий Docker.
+-----------------------------------------------------
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyring
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyring/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+-----------------------------------------------------
+# 2. Установите пакеты Docker.
+-----------------------------------------------------
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-builds-plugin docker-compose-plugin
+
+-----------------------------------------------------
+# 3. Убедиться, что установка прошла успешно, запустив hello-WorldWind.
+-----------------------------------------------------
+sudo docker run hello-world
+
+
+===============================================================
+# Скачивание репозитория с github
+===============================================================
+# полное клонирование репозитория
+git clone https://github.com/grigorukalex/easy_life.git
+
+# подтянуть последние изменения
+git pull
+
+
+===============================================================
+# Сборка и запуск docker-образа
+===============================================================
+# перейти в каталог с .dockerfile
+# собрать образ
+docker build . --tag easy_life
+
+# запуск проекта
+docker run -p 80:80 easy_life
