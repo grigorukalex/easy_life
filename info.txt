@@ -68,4 +68,4 @@ sudo docker build . --tag easy_life
 sudo docker run -p 80:80 easy_life
 
 # собрать образ и запустить проект
-sudo docker build . --tag easy_life && docker run -p 80:80 easy_life
+sudo docker build . --tag easy_life && sudo docker run -p 80:80 easy_life
