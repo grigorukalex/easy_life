@@ -62,7 +62,7 @@ git pull
 ===============================================================
 # перейти в каталог с .dockerfile
 # собрать образ
-docker build . --tag easy_life
+sudo docker build . --tag easy_life
 
 # запуск проекта
-docker run -p 80:80 easy_life
+sudo docker run -p 80:80 easy_life
