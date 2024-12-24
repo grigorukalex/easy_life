@@ -20,7 +20,7 @@ aiosqlite
 # https://docs.docker.com/engine/install/ubuntu/
 ===============================================================
 -----------------------------------------------------
-# 1. Настройте aptрепозиторий Docker.
+# 1. Настройте apt репозиторий Docker.
 -----------------------------------------------------
 # Add Docker's official GPG key:
 sudo apt-get update
@@ -66,3 +66,6 @@ sudo docker build . --tag easy_life
 
 # запуск проекта
 sudo docker run -p 80:80 easy_life
+
+# собрать образ и запустить проект
+sudo docker build . --tag easy_life && docker run -p 80:80 easy_life
