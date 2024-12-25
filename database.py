@@ -4,7 +4,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from typing import Optional
 
 engine = create_async_engine(
-    "sqlite+aiosqlite:///tasks.db"
+    "sqlite+aiosqlite:///db/tasks.db"
 )
 
 new_session = async_sessionmaker(engine, expire_on_commit=False)
