@@ -3,8 +3,9 @@ from fastapi import FastAPI
 
 from contextlib import asynccontextmanager
 
-from database import create_tables, delete_tables
-from router import router as tasks_router
+from database import create_tables
+from routers.tasks import router_tasks
+from routers.root import router_pages
 
 
 @asynccontextmanager
@@ -18,12 +19,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
-app.include_router(tasks_router)
-
-
-@app.get('/', tags=['Главная страница1'])
-def root():
-    return {'data': 'Главная страница'}
+app.include_router(router_pages)
+app.include_router(router_tasks)
 
 
 if __name__ == '__main__':

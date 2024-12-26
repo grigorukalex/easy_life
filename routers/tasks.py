@@ -4,19 +4,19 @@ from typing import Annotated
 from repository import TaskRepository
 from schemas import NewTask, Task
 
-router = APIRouter(
+router_tasks = APIRouter(
     prefix="/tasks",
-tags=['Задачи']
+    tags=['Задачи']
 )
 
 
-@router.get('', summary='Получить все задачи')
+@router_tasks.get('/get_all', summary='Получить все задачи')
 async def get_tasks():
     tasks = await TaskRepository.find_all_tasks()
     return {"tasks": tasks}
 
 
-@router.get('/{id_task}', summary='Получить конкретную задачу')
+@router_tasks.get('/get/{id_task}', summary='Получить конкретную задачу')
 async def get_task(id_task: int):
     task = await TaskRepository.find_one_task(id_task)
     return {'data': task}
@@ -26,7 +26,7 @@ async def get_task(id_task: int):
     # return HTTPException(status_code=404)
 
 
-@router.post('', summary='Создать новую задачу')
+@router_tasks.post('/create', summary='Создать новую задачу')
 async def create_task(
         new_task: Annotated[NewTask, Depends()]
 ):
@@ -35,7 +35,7 @@ async def create_task(
     return {'success': 'ok', "id_task": id_task, 'description': 'Задача успешно добавлена'}
 
 
-@router.post('/delete/{id_task}', summary='Удалить задачу')
+@router_tasks.post('/delete/{id_task}', summary='Удалить задачу')
 async def delete_task(id_task: int):
     id_delete_task = await TaskRepository.delete_one_task(id_task)
     if id_delete_task == -1:
