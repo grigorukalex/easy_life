@@ -1,4 +1,4 @@
 venv
-tasks.db
+db/tasks.db
 .idea
 info_lock.txt
