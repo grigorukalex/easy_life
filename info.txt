@@ -16,11 +16,25 @@ aiosqlite
 
 
 ===============================================================
-# Установка Docker
-# https://docs.docker.com/engine/install/ubuntu/
+Установка Docker
+https://docs.docker.com/engine/install/ubuntu/
 ===============================================================
 -----------------------------------------------------
-# 1. Настройте apt репозиторий Docker.
+1. Удалить старые версии Docker.
+-----------------------------------------------------
+Удалите пакеты Docker Engine, CLI, containerd и Docker Compose:
+sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+
+Образы, контейнеры, тома или пользовательские файлы конфигурации на вашем хосте не удаляются автоматически. Чтобы удалить все образы, контейнеры и тома:
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+
+Удалить список источников и брелоки
+sudo rm /etc/apt/sources.list.d/docker.list
+sudo rm /etc/apt/keyring/docker.asc
+
+-----------------------------------------------------
+2. Настройте apt репозиторий Docker.
 -----------------------------------------------------
 # Add Docker's official GPG key:
 sudo apt-get update
@@ -37,14 +51,23 @@ echo \
 sudo apt-get update
 
 -----------------------------------------------------
-# 2. Установите пакеты Docker.
+3. Установите пакеты Docker.
 -----------------------------------------------------
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-builds-plugin docker-compose-plugin
 
 -----------------------------------------------------
-# 3. Убедиться, что установка прошла успешно, запустив hello-WorldWind.
+4. Убедиться, что установка прошла успешно, запустив hello-WorldWind.
 -----------------------------------------------------
 sudo docker run hello-world
+
+
+===============================================================
+# Установка git на Linux
+===============================================================
+1. Пакеты Git доступны с использованием apt.
+2. Хорошая идея — убедиться, что вы используете последнюю версию. Для этого перейдите в командную строку и выполните следующую команду, чтобы убедиться, что все обновлено: sudo apt-get update.
+3. Чтобы установить Git, выполните следующую команду: sudo apt-get install git-all.
+4. После завершения вывода команды вы можете проверить установку, введя: git version.
 
 
 ===============================================================
@@ -58,14 +81,43 @@ git pull
 
 
 ===============================================================
-# Сборка и запуск docker-образа
+Установка PostgreSQL на Ubuntu
+https://selectel.ru/blog/tutorials/how-to-install-and-use-postgresql-on-ubuntu-20-04/
+===============================================================
+1. До загрузки PostgreSQL обновляем списки пакетов:
+$ sudo apt update
+
+2. Загрузим PostgreSQL с утилитой -contrib:
+$ sudo apt install postgresql postgresql-contrib
+Загрузятся драйверы PostgreSQL последней версии и развернутся необходимые компоненты на виртуальной машине с Ubuntu.
+
+3. Запускаем сервис:
+$ sudo systemctl start postgresql.service
+
+4. Проверка статуса сервиса:
+$ sudo systemctl status postgresql.service
+
+
+===============================================================
+Установка Docker с PostgreSQL на Ubuntu
+https://www.codeproject.com/Articles/5361528/How-to-Connect-a-FastAPI-Server-to-PostgreSQL-and
+https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
+===============================================================
+Пример
+sudo docker run --name postgres-fastapi -e POSTGRES_PASSWORD=postgres-fastapi --rm -p 5432:5432 postgres
+
+===============================================================
+Сборка и запуск docker-образа для сервера FastAPI
 ===============================================================
 # перейти в каталог с .dockerfile
 # собрать образ
 sudo docker build . --tag easy_life
 
 # запуск проекта
+sudo docker run -v /db/tasks.db:/tasks.db -p 80:80 easy_life
+sudo docker run -v db:/db -p 80:80 easy_life
 sudo docker run -p 80:80 easy_life
 
 # собрать образ и запустить проект
 sudo docker build . --tag easy_life && sudo docker run -p 80:80 easy_life
+
