@@ -32,11 +32,13 @@ async def create_task(
 ):
     task: Task = Task(name=new_task.name, description=new_task.description)
     id_task = await TaskRepository.add_one_task(task)
-    # tasks.add_new_task(new_task)
     return {'success': 'ok', "id_task": id_task, 'description': 'Задача успешно добавлена'}
 
 
 @router.post('/delete/{id_task}', summary='Удалить задачу')
 async def delete_task(id_task: int):
     id_delete_task = await TaskRepository.delete_one_task(id_task)
-    return {'success': 'ok', "id_task": id_delete_task, 'description': 'Задача успешно удалена'}
+    if id_delete_task == -1:
+        return {'success': 'error_id', "id_task": id_task, 'description': 'Задача с таким номером не существует'}
+    else:
+        return {'success': 'ok', "id_task": id_delete_task, 'description': 'Задача успешно удалена'}
