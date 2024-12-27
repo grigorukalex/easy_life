@@ -6,7 +6,7 @@ class TaskStatus(Enum):
     IN_WORK = 1  # В РАБОТЕ
     COMPLETE = 2  # ЗАВЕРШЕНА
     POSTPONED = 3  # ОТЛОЖЕНА
-    GARBAGE = 4  # В КОРЗИНЕ
+    GARBAGE = 4  # В КОРЗИНЕ/УДАЛЁННЫЕ
 
 
 class NewTask(BaseModel):

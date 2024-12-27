@@ -23,7 +23,7 @@ class TaskRepository:
             query = select(TasksOrm)
             result = await session.execute(query)
             task_models = result.scalars().all()
-            return  task_models
+            return task_models
 
     @classmethod
     async def find_one_task(cls, id_task: int):
@@ -33,7 +33,7 @@ class TaskRepository:
             result = await session.execute(query)
             print(result)
             task = result.scalar_one_or_none()
-            return  task
+            return task
 
     @classmethod
     async def delete_one_task(cls, id_task: int):
@@ -48,3 +48,13 @@ class TaskRepository:
                 await session.commit()
                 return id_task
             return -1
+
+    @classmethod
+    async def find_tasks_by_status(cls, status: int):
+        async with new_session() as session:
+            query = select(TasksOrm).filter_by(status=status)
+            print(query)
+            result = await session.execute(query)
+            print(result)
+            tasks = result.scalars().all()
+            return tasks
