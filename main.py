@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from contextlib import asynccontextmanager
 
@@ -19,9 +20,11 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 app.include_router(router_pages)
 app.include_router(router_tasks)
-
 
 if __name__ == '__main__':
     uvicorn.run('main:app', reload=True)
